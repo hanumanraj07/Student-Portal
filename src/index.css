@@ -1,0 +1,473 @@
+/* =========================================================
+   index.css — Tactical / Brutalist / Dark Theme
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+/* ---------- Variable & Tokens ---------- */
+:root {
+  --bg-dark: #000000;
+  --bg-deep: #050505;
+  --accent: #e63946;
+  /* Tactical Red */
+  --accent-glow: rgba(230, 57, 70, 0.4);
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --text-white: #ffffff;
+  --text-muted: #888888;
+  --text-mono: 'JetBrains Mono', monospace;
+  --success: #fff;
+  --error: #ff4d4d;
+  --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ---------- Global Reset & Body ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--bg-dark);
+  background-image:
+    linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+    linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03)),
+    radial-gradient(circle at 50% 50%, #1a0003 0%, #000000 100%);
+  background-size: 100% 4px, 3px 100%, 100% 100%;
+  background-attachment: fixed;
+  color: var(--text-white);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ---------- Utility: Scanline Overlay ---------- */
+body::after {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
+  z-index: 2000;
+  background-size: 100% 2px, 3px 100%;
+  pointer-events: none;
+}
+
+/* ---------- Animations ---------- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideRight {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* ---------- Navbar ---------- */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 3rem;
+  height: 80px;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(10px);
+  border-bottom: 2px solid var(--accent);
+}
+
+.navbar-brand {
+  font-size: 1.4rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.system-status {
+  font-family: var(--text-mono);
+  font-size: 0.65rem;
+  letter-spacing: 1px;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid var(--accent);
+  padding: 2px 8px;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: blink 1s infinite;
+}
+
+.navbar-links {
+  list-style: none;
+  display: flex;
+  gap: 0.25rem;
+}
+
+.navbar-links a {
+  text-decoration: none;
+  color: var(--text-muted);
+  padding: 0.7rem 1.5rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  transition: var(--transition);
+  position: relative;
+}
+
+.navbar-links a.active {
+  color: #fff;
+  background: var(--accent);
+}
+
+.navbar-links a.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: #fff;
+}
+
+/* ---------- Main Layout ---------- */
+.main-content {
+  max-width: 1200px;
+  margin: 3rem auto;
+  padding: 0 2rem;
+}
+
+.page {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+/* ---------- Tactical Components ---------- */
+.label-mono {
+  font-family: var(--text-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: var(--accent);
+  letter-spacing: 2px;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--glass-border);
+  padding: 2.5rem;
+  position: relative;
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: 20px;
+  height: 20px;
+  border-top: 2px solid var(--accent);
+  border-left: 2px solid var(--accent);
+}
+
+/* ---------- Home Page: Terminal Dashboard ---------- */
+.terminal-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.dossier-card {
+  border-left: 4px solid var(--accent);
+}
+
+.quick-actions-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.action-btn {
+  background: #111;
+  border: 1px solid var(--glass-border);
+  padding: 1.5rem;
+  text-align: center;
+  color: #fff;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  transition: var(--transition);
+}
+
+.action-btn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.system-clock {
+  font-family: var(--text-mono);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-align: right;
+  margin-top: 1rem;
+}
+
+/* ---------- Students Page: Dossier Filter ---------- */
+.filter-bar {
+  margin-bottom: 2.5rem;
+  position: relative;
+}
+
+.filter-input {
+  width: 100%;
+  padding: 1.2rem;
+  padding-left: 3rem;
+  background: #0a0a0a;
+  border: 1px solid var(--glass-border);
+  border-left: 4px solid var(--accent);
+  color: #fff;
+  font-family: var(--text-mono);
+  font-size: 0.9rem;
+  outline: none;
+  transition: var(--transition);
+}
+
+.filter-input:focus {
+  background: #111;
+  border-color: var(--accent);
+}
+
+.student-card {
+  padding: 2rem;
+  transition: var(--transition);
+}
+
+.student-card:hover {
+  background: rgba(230, 57, 70, 0.05);
+  border-color: var(--accent);
+}
+
+.card-avatar {
+  width: 40px;
+  height: 40px;
+  background: #fff;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+}
+
+/* ---------- Form: Two-Column Terminal ---------- */
+.terminal-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.full-width {
+  grid-column: span 2;
+}
+
+.form-input {
+  width: 100%;
+  padding: 1rem;
+  background: #000;
+  border: 1px solid var(--glass-border);
+  color: #fff;
+  font-family: var(--text-mono);
+  font-size: 0.85rem;
+  outline: none;
+}
+
+.radio-group {
+  display: flex;
+  background: #111;
+  border: 1px solid var(--glass-border);
+  padding: 4px;
+  gap: 4px;
+}
+
+.radio-option {
+  flex: 1;
+  cursor: pointer;
+}
+
+.radio-option input {
+  display: none;
+}
+
+.radio-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.8rem;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--text-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  transition: var(--transition);
+  border: 1px solid transparent;
+}
+
+.radio-option input:checked+.radio-btn {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.radio-btn:hover {
+  color: #fff;
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 1.2rem;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-submit:hover {
+  background: #ff4d4d;
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+
+/* ---------- Counter: Calibration Instrument ---------- */
+.counter-instrument {
+  border: 2px solid #222;
+  padding: 4rem;
+  text-align: center;
+}
+
+.counter-value {
+  font-family: var(--text-mono);
+  font-size: 10rem;
+  line-height: 1;
+  margin-bottom: 2rem;
+}
+
+.gauge-bar {
+  height: 4px;
+  background: #222;
+  width: 100%;
+  margin: 2rem 0;
+  position: relative;
+}
+
+.gauge-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.3s ease;
+}
+
+.counter-btns {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  margin-top: 3rem;
+}
+
+.circle-btn {
+  width: 65px;
+  height: 65px;
+  border: 1px solid var(--glass-border);
+  background: #000;
+  color: #fff;
+  font-family: var(--text-mono);
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circle-btn:hover {
+  border-color: #fff;
+  background: #111;
+}
+
+.btn-inc {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.btn-inc:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* ---------- Alerts ---------- */
+.success-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  color: #000;
+  padding: 1rem;
+  font-family: var(--text-mono);
+  font-weight: 800;
+  text-transform: uppercase;
+  text-align: center;
+  z-index: 3000;
+}
